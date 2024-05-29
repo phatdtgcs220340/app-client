@@ -1,10 +1,12 @@
-<script setup>
-import { reactive } from 'vue';
-
+<script setup lang="ts">
+    import { reactive } from 'vue';
+    import { getUserDetails } from '../../utils/userdetails';
     const user = reactive({
-        fullName: "Phat Do",
-        username: "ddtphat2004@gmail.com"
+        fullName: '',
+        username: ''
     })
+    const getUser = getUserDetails;
+    getUser(user)
 </script>
 <template>
     <div class="px-2 py-4">
