@@ -3,7 +3,7 @@ interface User {
     fullName: string,
     username: string
 }
-export async function getUserDetails(user : User) {
+export async function setUserDetails(user : User) {
     await getResource('user')
         .then((data : User) => {
             user.fullName = data.fullName;
@@ -14,3 +14,4 @@ export async function getUserDetails(user : User) {
             user.username = "Dummy username"
         })
 }
+export default User;

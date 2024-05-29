@@ -6,19 +6,16 @@ interface Application {
 }
 export async function getApplications() {
     return await getResource("application")
-        .then((data : Array<Application>) => {
-            return data;
-        })
         .catch(() => {
             return [
             {
                 id : "2131321321",
-                applicationName : "Dummy application1",
+                applicationName : "Dummy1",
                 type: "Dummy type"
             },
             {
                 id: "121321321321",
-                applicationName : "Dummy application2",
+                applicationName : "Dummy2",
                 type: "Dummy type"
             }]
         })
