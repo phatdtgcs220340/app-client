@@ -9,9 +9,5 @@ export async function setUserDetails(user : User) {
             user.fullName = data.fullName;
             user.username = data.username
         })
-        .catch(() => {
-            user.fullName = "Dummy name"
-            user.username = "Dummy username"
-        })
 }
 export default User;
