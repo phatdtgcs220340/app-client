@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+    import { ref } from 'vue';
+    import { deleteAccount } from '../../api/post/deleteAccount';
 
     defineProps({
         id: String,
@@ -9,6 +10,10 @@ import { ref } from 'vue';
         type : String,
         dateAudit: String
     })
+    async function doDelete(id : string) : Promise<void>{
+        await deleteAccount(id)
+
+    }
     const hided = ref(false);
 </script>
 <template>
@@ -41,6 +46,13 @@ import { ref } from 'vue';
                     </svg>
                 </button>
             </div>
+            <button 
+                @click="doDelete(String(id))"
+                class="mt-1 px-2 py-1 bg-white rounded-lg border-2
+                text-red-400 font-semibold
+                hover:bg-red-400 hover:text-white">
+                    Delete
+            </button>
         </div>
     </div>
 </template>
