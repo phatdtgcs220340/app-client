@@ -1,5 +1,5 @@
 import axios from "axios";
-import { accessToken, resourceBaseURL } from "../../env";
+import { getAccessToken, resourceBaseURL } from "../../env";
 
 interface Account {
     username: String,
@@ -22,7 +22,7 @@ export async function createAccount(form : Account) {
         },
         {
             headers : {
-                'Authorization' : `Bearer ${accessToken}`,
+                'Authorization' : `Bearer ${getAccessToken()}`,
                 'Content-Type' : 'application/json'
             }
         })

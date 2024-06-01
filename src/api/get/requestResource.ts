@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {accessToken, resourceBaseURL} from '../../env';
+import { getAccessToken, resourceBaseURL} from '../../env';
 
 const CODEMAP: Map<number, string> = new Map<number, string>([
     [404, "Error: Account Not Found"],
@@ -9,7 +9,7 @@ const CODEMAP: Map<number, string> = new Map<number, string>([
 export async function getResource(resource : string) {
     return await axios.get(`${resourceBaseURL}/api/v1/${resource}`,{
             headers : {
-                'Authorization' : `Bearer ${accessToken}`
+                'Authorization' : `Bearer ${getAccessToken()}`
             }
         })
         .then((response) => {

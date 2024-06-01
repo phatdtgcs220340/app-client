@@ -2,44 +2,35 @@
     import { reactive, ref } from 'vue';
     import axios from 'axios';
     import Spinner from '../Spinner/Spinner.vue';
-    const redirectURI = "http://localhost:5173/authorized"
-    const authServer = "http://127.0.0.1:9000"
-    const authorziationURL = `${authServer}/oauth2/authorize?response_type=code&client_id=client&scope=openid&redirect_uri=${redirectURI}`
-    const header = {
-        headers : {
-            'Content-type' : 'application/x-www-form-urlencoded'
-        }
-    }
-    interface Form {
-        username : string,
-        password: string
-    }
+    import { authBaseURL, authorLink } from '../../env';
     const loginForm = reactive({
         username: '',
         password: ''
     })
     const loadCompleted = ref(true);
-    async function login(form : Form) {
-        loadCompleted.value = false;
-        await axios.post(`${authServer}/login`, {
-            username: form.username,
-            password: form.password
-        }, header)
-        .then((response1) => {
-            console.log("log: ")
-            console.log(response1.headers)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-        .finally(() => { 
+    async function login() {
+        try {
+            const instance = axios.create({ withCredentials : true })
+            loadCompleted.value = false;
+            await instance.post(`${authBaseURL}/api/login`, {
+                username: loginForm.username,
+                password: loginForm.password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded', // Ensure the correct content type
+                },
+                withCredentials: true, // Again, to preserve the session/cookies
+            })
+            .then(() => window.location.assign(authorLink))
+        } catch (error) {
+        } finally {
             loadCompleted.value = true;
-        })
+        }
     }
-</script>
+    </script>
 <template>
     <div class="bg-gray-500 flex justify-center items-center h-screen z-100">
-        <form @submit.prevent="login(loginForm)" 
+        <form @submit.prevent="login" 
         class="grid grid-cols-3 w-fit p-6 rounded-lg bg-white shadow-md place-content-start">
             <label class="font-medium text-gray-600 text-lg"
                 >Username</label>

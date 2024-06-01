@@ -1,5 +1,15 @@
-const authBaseURL = "http://localhost:9000"
+const authBaseURL = "http://127.0.0.1:9000"
 const resourceBaseURL = "http://localhost:9090"
-const accessToken = "eyJraWQiOiJmMDVkYWM2Ny1mY2VhLTQ3YzQtOWMwNy0zYjcwOTQxZGEyMmUiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJkZHRwaGF0MjAwNEBnbWFpbC5jb20iLCJhdWQiOiJjbGllbnQiLCJuYmYiOjE3MTY5NjI2NzksInNjb3BlIjpbIm9wZW5pZCJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwMDAiLCJmdWxsTmFtZSI6IkRvIFRhbiBQaGF0IiwiZXhwIjoxNzE3MDA1ODc5LCJpYXQiOjE3MTY5NjI2NzksImp0aSI6IjZmZjc2NGZkLTViYzItNDI4OS04YzU0LTM1MjhkYjNkZWI3ZiJ9.p9pQRkrRcdvAtFi9k06UVcF7HL8NkgijUlJfEYOXveDyB7NPxybHb1DZgnvAxAsAdMTNXTa4Te5u3MNZuCG8MIM8xR8Hnl2lC7JfPXbR3QaweaEnRjqeRomR-89xQ446-rFYDmX7HkntwNJmvRUJ1OYJwfh3vqHSrfspbnzNjN77rQcIOLudJets1Gf86ZpQpyVijFRtj5dvsM3JvXhx5m-X87vNKlewy75gFVLDjnHqOfn3dML6kEnvmZQftIatAnDyzRy8g15tTLgj2pFHWFa4744AiTKklWjzI6m5SpgdpD3HKmjQBWhU7DT_h59YvhoIuTKbdtVF7Eq571J3oQ"
+const authorLink = `${authBaseURL}/oauth2/authorize?response_type=code&client_id=client&scope=openid&redirect_uri=http://localhost:5173/authorized`
+const clientId = 'client';
+const clientSecret = 'secret';
+const redirectUri = 'http://localhost:5173/authorized';
+const tokenEndpoint = 'http://localhost:9000/oauth2/token';
 
-export {accessToken, resourceBaseURL};
+export {resourceBaseURL, authBaseURL, authorLink, clientId, clientSecret, tokenEndpoint, redirectUri};
+export function getAccessToken() {
+    return window.localStorage.getItem('access_token')
+}
+export function getRefreshToken() {
+    return window.localStorage.getItem('refresh_token')
+}
