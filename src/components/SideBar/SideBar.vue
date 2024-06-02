@@ -4,13 +4,10 @@
     import Application from '../../api/get/application';
     import ApplicationBar from './ApplicationBar.vue';
     import SearchBar from './SearchBar.vue';
-    import { useRoute, useRouter } from 'vue-router';
-import { getAccessToken } from '../../env';
-import { logout } from '../../logic/logout';
-    
-    const isAuthenticated = ref(getAccessToken() != undefined)
-    const router = useRouter()
-    const route = useRoute()
+    import { getAccessToken } from '../../env';
+    import { logout } from '../../logic/logout';
+    defineProps({ isOpened : Boolean })
+    const isAuthenticated = ref(getAccessToken() != undefined);
     const applications = reactive<Array<Application>>([]);
     const startWith = ref('')
     const filteredApplications = computed(() => {
@@ -43,18 +40,9 @@ import { logout } from '../../logic/logout';
             loadCompleted.value = true;
         }
     })
-    const search = computed({
-    get() {
-        return route.query.search ?? ''
-    },
-    set(search) {
-        router.replace({ query: { search } })
-    }
-    })
-    console.log(route.name)
 </script>
 <template>
-    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-8 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
+    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-8 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar" :class="{'translate-x-0' : isOpened }">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <ul class="space-y-2 font-medium">
             <li>
@@ -93,10 +81,12 @@ import { logout } from '../../logic/logout';
                         :key="application.id"
                         v-if="displayApplications && loadCompleted"
                         >
-                        <ApplicationBar 
-                            :applicationId="application.id"
-                            :application="application.applicationName"
-                        />
+                        <RouterLink :to="`/application/${application.id}`">
+                            <ApplicationBar 
+                                :applicationId="application.id"
+                                :application="application.applicationName"
+                            />
+                        </RouterLink>
                     </template>
                     <template
                         v-if="displayApplications && !loadCompleted"
