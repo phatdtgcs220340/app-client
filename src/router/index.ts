@@ -8,7 +8,7 @@ import Authorizing from '../components/Loading/Authorizing.vue'
 const routes = [
   { path: '/', name: '', component: Dashboard},
   { path: '/create',name: 'create', component: CreateAccount},
-  { path: '/account', name: 'account', component: Account },
+  { path: '/application/:id', name: 'account', component: Account },
   { path: '/login', name: 'login', component: LoginBox },
   { path: '/authorized', name: 'authorizing', component: Authorizing}
 ]
