@@ -18,16 +18,16 @@ export async function exchangeAccessToken(authorizationCode : string | null) {
         window.localStorage.setItem("access_token", data.access_token);
         window.localStorage.setItem("refresh_token", data.refresh_token);
     })
-    .catch(async () => {
-        await axios.post(tokenEndpoint, 
-            {
-                grant_type: 'refresh_token',
-                refresh_token: window.localStorage.getItem("refresh_token")
-            }
-        )
-        .then((r) => {
-            const data = r.data;
-            window.localStorage.setItem("access_token", data.access_token);
-        })
+    }
+export async function exchangeRefreshToken() {
+    await axios.post(tokenEndpoint, 
+        {
+            grant_type: 'refresh_token',
+            refresh_token: window.localStorage.getItem("refresh_token")
+        }, HEADER
+    )
+    .then((r) => {
+        const data = r.data;
+        window.localStorage.setItem("access_token", data.access_token);
     })
-}
+    }

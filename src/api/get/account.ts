@@ -17,13 +17,5 @@ export async function setAccount(applicationId : string, account : Account) {
             account.type = data.type;
             account.dateAudit = data.dateAudit;
         })
-        .catch(() => { 
-            account.id = "2131321321";
-            account.username = "dummyaccount";
-            account.password = "dummypassword";
-            account.applicationName = "Dummy1";
-            account.type = "Dummy type";
-            account.dateAudit = "29/04/2004 12:00 pm";
-        })
 }
 export default Account;

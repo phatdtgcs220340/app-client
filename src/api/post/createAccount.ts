@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAccessToken, resourceBaseURL } from "../../env";
+import { exchangeRefreshToken } from "../../logic/exchangeAccessToken";
 
 interface Account {
     username: String,
@@ -7,6 +8,7 @@ interface Account {
     application : String, 
     type: String
 }
+let accessToken = getAccessToken()
 /**
  * Create account function that do POST request to the web server
  * @param
@@ -22,11 +24,15 @@ export async function createAccount(form : Account) {
         },
         {
             headers : {
-                'Authorization' : `Bearer ${getAccessToken()}`,
+                'Authorization' : `Bearer ${accessToken}`,
                 'Content-Type' : 'application/json'
             }
         })
         .then((response) => {
             return response.data
+        })
+        .catch(async () => {
+            await exchangeRefreshToken()
+            accessToken = getAccessToken()
         })
 }
