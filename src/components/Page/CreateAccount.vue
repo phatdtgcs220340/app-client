@@ -21,7 +21,8 @@
         if (!(blankApplication.value || blankApplication.value || invalidPassword.value)) {
             loadCompleted.value = false;
             try {
-            await createAccount(form)
+                await createAccount(form)
+                
                 .catch(e => {
                     let statusCode : number  = e.response.status;
                     responseMessage.value = CODEMAP.get(statusCode);   
@@ -41,7 +42,7 @@
                 <h1 class="text-2xl text-gray-800 font-medium mb-2">
                     🛸Create Account Form
                 </h1>
-                <form @submit.prevent="saveAccount" class="grid grid-cols-2 w-1/2">
+                <form @submit.prevent="saveAccount" class="grid grid-cols-2 md:w-1/2 sm:w-full">
                     <h1 class="ml-1 text-lg font-medium text-gray-800">
                         Application
                     </h1>
@@ -126,7 +127,7 @@
                             font-medium text-gray-50 text-lg
                             flex justify-center items-center
                             hover:bg-green-600 hover:text-gray-100"
-                        :disabled="(form.application == '' || form.password.length < 8 || form.username == '')"
+                        :disabled="(form.application == '' || form.password.length < 8 || form.username == '' || !loadCompleted)"
                         :class="{'cursor-not-allowed' : form.application == '' || form.password.length < 8 || form.username == '', 'cursor-progress' : !loadCompleted}">
                             <span v-if="loadCompleted">Save</span>
                             <span v-else>
