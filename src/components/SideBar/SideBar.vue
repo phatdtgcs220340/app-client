@@ -5,9 +5,12 @@
     import ApplicationBar from './ApplicationBar.vue';
     import SearchBar from './SearchBar.vue';
     import { getAccessToken } from '../../env';
-    import { logout } from '../../logic/logout';
+    import { logout } from '../../logic/authenticate.ts';
+    import { useRoute } from 'vue-router';
+
     defineProps({ isOpened : Boolean })
     const isAuthenticated = ref(getAccessToken() != undefined);
+    const route = useRoute()
     const applications = reactive<Array<Application>>([]);
     const startWith = ref('')
     const filteredApplications = computed(() => {
@@ -23,9 +26,7 @@
         try {
         await getApplications()
             .then((data : Array<Application>) => {
-                data.forEach((app) => {
-                applications.push(app);
-                })
+                data.forEach((app) => applications.push(app))
             })
         }
         catch {
@@ -33,6 +34,14 @@
         }
         
     }
+    watch(() => route.query, async(param : Object) => {
+        if (param.hasOwnProperty('reload')){
+            loadCompleted.value = false;
+            applications.splice(0, applications.length);
+            await loadApplications()
+            loadCompleted.value = true;
+        }
+    })
     watch(displayApplications, async display => {
         if (display && applications.length == 0) {
             loadCompleted.value = false;
@@ -121,7 +130,7 @@
                 </RouterLink>
             </li>
             <li>
-                <div v-if="isAuthenticated" @click="logout" 
+                <div v-if="isAuthenticated" @click="logout"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group cursor-pointer"
                     >
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">

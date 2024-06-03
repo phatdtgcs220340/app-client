@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import { reactive, ref, watch } from 'vue';
     import { deleteAccount } from '../../api/post/deleteAccount';
-    import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { setAccount } from '../../api/get/account';
-    
+    import LoadingPage from './LoadingPage.vue';
+
     const account = reactive({
         id : '',
         username: '',
@@ -12,26 +13,27 @@
         type: '',
         dateAudit : ''
     })
-    
+    const loadCompleted = ref(true)
     const route = useRoute()
-
-    watch(() => route.params.id, async (newId, oldId) => {
+    const router = useRouter()
+    watch(() => route.params.id, async (newId) => {
+        loadCompleted.value = false
         await setAccount(newId.toString(), account)
-        console.log(account)
+        loadCompleted.value = true
     }, 
     {
         immediate : true
     })
     async function doDelete(id : string) : Promise<void>{
         await deleteAccount(id)
-
+            .then(() => router.replace({path: '/', query : { reload : 'true' } }))  
     }
     const hided = ref(false);
 </script>
 <template>
     <div class="p-4 pt-8 sm:ml-64">
         <div class="p-2 border-2 border-gray-200 border-dashed rounded-lg ">
-            <div class="px-2 py-4 bg-gray-100 rounded-lg">
+            <div v-if="loadCompleted" class="px-2 py-4 bg-gray-100 rounded-lg">
                 <h1 class="mb-2
                     text-2xl font-semibold">
                     {{ account.applicationName }}</h1>
@@ -60,15 +62,16 @@
                             </svg>
                         </button>
                     </div>
-                    <RouterLink to="/"
+                    <button
                         @click="doDelete(String(account.id))"
                         class="mt-1 px-2 py-1 bg-white rounded-lg border-2
                         text-red-400 font-semibold
                         hover:bg-red-400 hover:text-white">
                             Delete
-                    </RouterLink>
+                    </button>
                 </div>
             </div>
+            <LoadingPage v-else class="px-2 py-4 bg-gray-100 rounded-lg"/>
         </div>
     </div>
 </template>

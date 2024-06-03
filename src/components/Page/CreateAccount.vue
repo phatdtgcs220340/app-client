@@ -9,7 +9,6 @@
     const invalidPassword = ref(false);
     const loadCompleted = ref(true);
     const router = useRouter()
-    router.push('/create')
     const responseMessage: { value: string | undefined; } = ref('')
     const form = reactive({
         username: '',
@@ -22,9 +21,10 @@
             loadCompleted.value = false;
             try {
                 await createAccount(form)
-                
+                .then(() => router.replace({path : '', query : { reload : 'true'}}))
                 .catch(e => {
                     let statusCode : number  = e.response.status;
+                    console.log(statusCode)
                     responseMessage.value = CODEMAP.get(statusCode);   
                 })
                 .finally(() => loadCompleted.value = true);
@@ -53,9 +53,7 @@
                         text-sm text-gray-800
                         focus:outline-none " type="text"
                         @blur="() => {
-                            if (form.application == '') 
-                                blankApplication = true;
-                            else blankApplication = false;
+                            blankApplication= form.application == '';
                         }"
                         @focus="() => blankApplication = false"
                         :class="{'border' : blankApplication, 'border-red-400' : blankApplication}"
@@ -69,6 +67,7 @@
                         <option value="BANK_APPLICATION">Bank application</option>
                         <option value="CARD">Card</option>
                         <option value="SHOPPING_APPLICATION">Shopping application</option>
+                        <option value="GAME">Game</option>
                         <option value="OTHERS">Others</option>
                     </select>
                     <h1 class="text-sm text-red-400 font-medium"
@@ -82,9 +81,7 @@
                         text-sm text-gray-800
                         focus:outline-none" type="text"
                         @blur="() => {
-                            if (form.username == '') 
-                                blankUsername = true;
-                            else blankUsername = false;
+                            blankUsername= form.username == '';
                         }"
                         @focus="() => blankUsername = false"
                         :class="{'border' : blankUsername, 'border-red-400' : blankUsername}"
@@ -100,9 +97,7 @@
                         text-sm text-gray-800
                         focus:outline-none " type="text"
                         @blur="() => {
-                            if (form.password.length < 8) 
-                                invalidPassword = true;
-                            else invalidPassword = false;
+                            invalidPassword= form.password.length < 8;
                         }"
                         @focus="() => invalidPassword = false"
                         :class="{'border' : invalidPassword, 'border-red-400' : invalidPassword}"
