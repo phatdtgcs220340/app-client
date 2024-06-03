@@ -10,6 +10,7 @@ export function logout() {
     window.location.assign("/login")
 }
 export async function login(form : LoginForm) {
+    console.log(authorLink)
     return axios.post(`${authBaseURL}/api/login`, {
         username: form.username,
         password: form.password,
