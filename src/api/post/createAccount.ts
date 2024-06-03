@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getAccessToken, resourceBaseURL } from "../../env";
 import { exchangeRefreshToken } from "../../logic/exchangeAccessToken";
+import { logout } from "../../logic/authenticate";
 
 interface Account {
     username: String,
@@ -35,4 +36,5 @@ export async function createAccount(form : Account) {
             await exchangeRefreshToken()
             accessToken = getAccessToken()
         })
+        .catch(logout)
 }

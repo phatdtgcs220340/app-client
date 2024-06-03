@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getAccessToken, resourceBaseURL } from "../../env";
 import { exchangeRefreshToken } from "../../logic/exchangeAccessToken";
+import { logout } from "../../logic/authenticate";
 
 let accessToken  = getAccessToken()
 /**
@@ -20,4 +21,5 @@ export async function deleteAccount(id : String) {
             await exchangeRefreshToken()
             accessToken = getAccessToken()
         })
+        .catch(logout)
 }
