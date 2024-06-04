@@ -17,5 +17,6 @@ export async function setAccount(applicationId : string, account : Account) {
             account.type = data.type;
             account.dateAudit = data.dateAudit;
         })
+        .catch(e => e)
 }
 export default Account;

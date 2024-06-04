@@ -9,15 +9,15 @@ interface Form {
 }
 let accessToken = getAccessToken()
 /**
- * Create account function that do POST request to the web server
- * @param
- * @returns A Promise 
+ * Update account function that do POST request to the web server
+ * @returns A Promise
+ * @param form
  */
 export async function updateAccount(form : Form) {
     return await axios.patch(`${resourceBaseURL}/api/v1/account`,
         {
             "id" : form.id,
-            "password" : form.password
+            "newPassword" : form.password
         },
         {
             headers : {
