@@ -45,9 +45,6 @@
                 <template v-if="loadCompleted">Log in</template>
                 <template v-else><Spinner class="text-center"/></template>
             </button>
-            <div class="col-span-3 mb-1 text-sm text-red-400">
-              {{ errorMessage }}
-            </div>
             <div class="col-span-3 text-sm text-gray-600">
                 First time here? <span 
                     class="cursor-pointer

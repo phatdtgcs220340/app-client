@@ -11,7 +11,7 @@ export function logout() {
 }
 export async function login(form : LoginForm) {
     console.log(authorLink)
-    return axios.post(`${authBaseURL}/api/login`, {
+    await axios.post(`${authBaseURL}/api/login`, {
         username: form.username,
         password: form.password,
     }, {
@@ -20,5 +20,8 @@ export async function login(form : LoginForm) {
         },
         withCredentials: true, // Again, to preserve the session/cookies
     })
-        .then(() => window.location.assign(authorLink))
+    .catch(e => {
+        console.log(e.code)
+    })
+    window.location.assign(authorLink)
 }
