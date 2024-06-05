@@ -2,6 +2,7 @@
     import { reactive, ref } from 'vue';
     import Spinner from '../Spinner/Spinner.vue';
     import {login} from "../../logic/authenticate.ts";
+import router from '../../router/index.ts';
     const loginForm = reactive({
         username: '',
         password: ''
@@ -45,8 +46,9 @@
                 <template v-if="loadCompleted">Log in</template>
                 <template v-else><Spinner class="text-center"/></template>
             </button>
-            <div class="col-span-3 text-sm text-gray-600">
+            <div class="col-span-3 text-sm text-gray-600 select-none">
                 First time here? <span 
+                    @click="() => router.replace({ path : '/register' })"
                     class="cursor-pointer
                         underline underline-offset-2
                         hover:font-medium">
