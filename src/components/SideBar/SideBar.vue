@@ -94,6 +94,7 @@
                             <ApplicationBar 
                                 :applicationId="application.id"
                                 :application="application.applicationName"
+                                :type="application.type"
                             />
                         </RouterLink>
                     </template>

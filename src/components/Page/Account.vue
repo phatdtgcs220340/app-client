@@ -6,6 +6,7 @@ import { setAccount } from '../../api/get/account';
 import LoadingPage from './LoadingPage.vue';
 import { updateAccount } from '../../api/post/updateAccount';
 import { generatePassword } from '../../logic/generatePassword';
+import { typeMap } from '../../mapper/type';
 const account = reactive({
     id: '',
     username: '',
@@ -49,14 +50,14 @@ const hided = ref(true);
             <div v-if="loadCompleted" class="px-2 py-4 bg-gray-100 rounded-lg">
                 <h1 class="mb-2
                     text-2xl font-semibold">
-                    {{ account.applicationName }}</h1>
+                     {{ typeMap(account.type) + account.applicationName }}</h1>
                 <div class="text-gray-800">
                     <h1 class="mb-1 px-2 font-semibold">
                         Username
                     </h1>
-                    <h1 class="bg-white w-fit px-2 py-1 rounded-lg border-b text-sm">
-                        {{ account.username }}
-                    </h1>
+                    <input disabled 
+                    class="bg-white w-fit px-2 py-1 rounded-lg border-b cursor-text
+                    text-sm" v-model="account.username">
                     <h1 class="mb-1 px-2 font-semibold">
                         Password
                     </h1>
@@ -97,7 +98,7 @@ const hided = ref(true);
                         invalidPassword = false
                     }" 
                         v-if="displayUpdated"
-                        class="mt-1 text-sm col-span-2 text-cyan-600
+                        class="mt-1 text-sm col-span-2 text-cyan-600 w-fit
                         cursor-pointer underline underline-offset-2 
                         select-none">Generate password</h1>
 
@@ -109,7 +110,8 @@ const hided = ref(true);
                     <button @click="() => {
                         displayUpdated = !displayUpdated;
                         hided = false;
-                    }" class="mt-1 px-2 py-1 bg-white rounded-lg border-2
+                    }" 
+                    class="mt-1 px-2 py-1 bg-white rounded-lg border-2
                         text-gray-600 font-semibold
                         hover:bg-gray-600 hover:text-white">
                         Update

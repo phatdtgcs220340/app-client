@@ -1,8 +1,10 @@
 <script setup lang="ts">
+    import { typeMap } from '../../mapper/type';
     const emit = defineEmits(['openAccount'])
     defineProps({
         applicationId: String, 
-        application: String
+        application: String,
+        type : String
     })
 </script>
 <template>
@@ -11,9 +13,7 @@
             flex items-center gap-2
             text-gray-800 text-sm font-medium
             hover:bg-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 16 16">
-                <circle cx="8" cy="8" r="4" fill="currentColor" />
-            </svg>
+            {{ typeMap(type) }}
         {{ application }}
     </div>
 </template>

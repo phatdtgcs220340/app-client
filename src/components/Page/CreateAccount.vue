@@ -62,13 +62,13 @@
                         text-sm text-gray-800
                         focus:outline-none"
                         v-model="form.type">
-                        <option value="SOCIAL_MEDIA" selected>Social media </option>
-                        <option value="WEB_TOOL">Web tool</option>
-                        <option value="BANK_APPLICATION">Bank application</option>
-                        <option value="CARD">Card</option>
-                        <option value="SHOPPING_APPLICATION">Shopping application</option>
-                        <option value="GAME">Game</option>
-                        <option value="OTHERS">Others</option>
+                        <option value="SOCIAL_MEDIA" selected>💏 Social media</option>
+                        <option value="WEB_TOOL">🦾 Web tool</option>
+                        <option value="BANK_APPLICATION">🤑 Bank application</option>
+                        <option value="CARD">🗃️ Card</option>
+                        <option value="SHOPPING_APPLICATION">🛍️ Shopping application</option>
+                        <option value="GAME">🎮 Game</option>
+                        <option value="OTHERS">🛸 Others</option>
                     </select>
                     <h1 class="text-sm text-red-400 font-medium"
                         v-if="blankApplication"
