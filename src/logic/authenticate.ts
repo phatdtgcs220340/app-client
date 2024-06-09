@@ -5,9 +5,10 @@ interface LoginForm{
     username : string,
     password : string
 }
-export function logout() {
+export async function logout() {
     window.localStorage.clear();
     window.location.assign("/login")
+    await axios.get(`${authBaseURL}/api/logout`)
 }
 export async function login(form : LoginForm) {
     console.log(authorLink)

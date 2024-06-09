@@ -1,18 +1,28 @@
 <script setup lang="ts">
-    import { reactive, ref } from 'vue';
-    import { setUserDetails } from '../../api/get/userdetails';
+    import { onMounted, reactive, ref } from 'vue';
+    import { getUserDetails } from '../../api/get/userdetails';
     import { getAccessToken } from '../../env';
     import LoadingPage from './LoadingPage.vue';
     const user =  reactive({
         username: '',
         fullName: ''
     })
-    const loadCompleted = ref(true)
-    if (getAccessToken != undefined) {
-        loadCompleted.value = false;
-        setUserDetails(user);
-        loadCompleted.value = true;
-    }
+    const loadCompleted = ref(true);
+    onMounted(async () => {
+        const token = getAccessToken();
+        if (token !== undefined) {
+            loadCompleted.value = false;
+            try {
+            const { fullName, username } = await getUserDetails();
+            user.fullName = fullName;
+            user.username = username;
+            } catch (error) {
+            console.error('Error fetching user details:', error);
+            } finally {
+            loadCompleted.value = true;
+            }
+        }
+    });
 </script>
 <template>
     <div class="p-4 pt-8 sm:ml-64">

@@ -51,8 +51,14 @@
     })
 </script>
 <template>
-    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-8 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar" :class="{'translate-x-0' : isOpened }">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
+    <aside id="logo-sidebar" 
+    class="fixed top-0 left-0 z-40 w-64 pt-8 h-screen 
+    transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0
+    " 
+    aria-label="Sidebar" :class="{'translate-x-0' : isOpened }">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white 
+        scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-white
+        scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
         <ul class="space-y-2 font-medium">
             <li>
                 <RouterLink to="/"
